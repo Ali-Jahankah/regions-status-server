@@ -39,3 +39,5 @@ export interface ApiResponse {
   strict: boolean;
   server_issue: any;
 }
+// A type for the all-regions data
+export type AllRegionsData = ApiResponse[];
