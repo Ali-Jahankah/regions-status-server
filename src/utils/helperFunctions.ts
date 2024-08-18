@@ -37,7 +37,7 @@ export const dataTimer = (action: 'start' | 'stop'): void => {
           //Log the seconds evry 10 seconds
           console.log(`Next Update after ${60 - seconds} seconds...`);
         }
-      }, 10000); // Logs every 10 seconds
+      }, 10000);
     } else {
       console.log('Timer is already running');
     }
