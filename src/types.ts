@@ -1,4 +1,4 @@
-//Adding proper types for the expected response from the provided API
+//Types for the expected response from the provided API
 
 export interface ServiceStatus {
   redis: boolean;
