@@ -1,16 +1,21 @@
+import { AllRegionsData, ApiResponse } from './../types';
+
 import { Server } from 'http';
 import { fetchAndCacheDataHandler } from '../api';
 import { getCache } from '../cache';
-export const startServer = (server: Server, port: number | string): void => {
+
+export const startServer = (server: Server, port: number | string) => {
+  // Running server
   server.listen(port, () => {
     console.log(`Server is running on port ${port}`);
+    //Set the timer
     dataTimer('start');
   });
 };
 
 // Create a function that start or stop a timer to inform the users that when data will update
 let timerId: NodeJS.Timeout | null = null;
-let seconds: number = 0;
+export let seconds: number = 0;
 
 export const dataTimer = (action: 'start' | 'stop'): void => {
   if (action === 'start') {
@@ -21,23 +26,20 @@ export const dataTimer = (action: 'start' | 'stop'): void => {
       });
 
       timerId = setInterval(() => {
-        console.log(seconds);
-        seconds += 10;
+        seconds += 1;
         if (seconds >= 60) {
           // Update data and call the API every 60 seconds
           fetchAndCacheDataHandler().then(() => {
             console.log('Data updated. Next update after 60 seconds...');
-            const test = getCache('eu-west')!;
-            console.log('Cached data:', test);
           });
 
           // Reset the timer
           seconds = 0;
         } else {
-          //Log the seconds evry 10 seconds
+          //Log the seconds evry second
           console.log(`Next Update after ${60 - seconds} seconds...`);
         }
-      }, 10000);
+      }, 1000);
     } else {
       console.log('Timer is already running');
     }
@@ -51,4 +53,10 @@ export const dataTimer = (action: 'start' | 'stop'): void => {
       console.log('No timer to stop');
     }
   }
+};
+export const sendDataHandler = (
+  region: string
+): ApiResponse | undefined | AllRegionsData => {
+  const regionStatusData = getCache(region);
+  return regionStatusData;
 };
