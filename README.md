@@ -62,6 +62,14 @@ npm install
 npm start
 ```
 
+# Tests
+
+You can just run the tests using:
+
+```bash
+npm test
+```
+
 # Deployed project
 
 ### This Server side project is deployed on Koyeb
